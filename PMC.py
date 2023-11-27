@@ -13,12 +13,14 @@ class PMC:
 
     def fit(self, X, y):
         previous_weights = self.weights.copy()
+        predictions = []
         for i in range(len(X)):
             prediction = self.predict(X[i])
+            predictions.append(prediction)
             if prediction != y[i]:
                 self.weights[prediction-1] -= self.learning_rate * X[i]
                 self.weights[y[i]-1] += self.learning_rate * X[i]
-        return np.array_equal(previous_weights, self.weights)
+        return predictions, np.array_equal(previous_weights, self.weights)
         
     def predict(self, X):
         scores = np.dot(self.weights, X)
