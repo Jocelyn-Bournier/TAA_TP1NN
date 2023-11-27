@@ -25,8 +25,8 @@ data.iloc[:, :-1] = scaler.fit_transform(data.iloc[:, :-1])
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 print(X_train.shape)
-X_train = [resample(X_train, n_samples=len(X_train)//5, replace=True) for i in range(5)]
-y_train = [resample(y_train, n_samples=len(y_train)//5, replace=True) for i in range(5)]
+X_train = [resample(X_train, n_samples=len(X_train)//2, replace=True) for i in range(5)]
+y_train = [resample(y_train, n_samples=len(y_train)//2, replace=True) for i in range(5)]
 
 
 mlp = nn.MLPClassifier(
