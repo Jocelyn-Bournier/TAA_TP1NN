@@ -15,6 +15,10 @@ data = pd.read_csv('iris.txt', header=None, sep='\t')
 classes = 3
 features = 4
 
+#normalize data using standard scaler
+scaler = StandardScaler()
+data.iloc[:, :-1] = scaler.fit_transform(data.iloc[:, :-1])
+
 # Split the data into features and labels
 X = data.iloc[:, :-1].values
 y = data.iloc[:, -1].values
