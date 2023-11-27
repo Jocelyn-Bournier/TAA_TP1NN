@@ -23,7 +23,7 @@ y = data.iloc[:, -1].values
 #plt.show()
 
 # Split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=2)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
 #train perceptron until convergence
 pmc = PMC.PMC(3, 4)
@@ -45,6 +45,7 @@ while not converged :
     last_score = score
     if not converged :
         converged = cpt_delta == iters_delta
+
 print("============ Train Performance ============")
 print(precision_score(y_train, predictions, average='macro'))
 print(recall_score(y_train, predictions, average='macro'))
