@@ -10,9 +10,14 @@ from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import confusion_matrix
+from sklearn.preprocessing import StandardScaler
 
 # Load the data
 data = pd.read_csv('iris.txt', header=None, sep='\t')
+
+#normalize data using standard scaler
+scaler = StandardScaler()
+data.iloc[:, :-1] = scaler.fit_transform(data.iloc[:, :-1])
 
 # Split the data into features and labels
 X = data.iloc[:, :-1].values
@@ -28,23 +33,14 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 #train perceptron until convergence
 pmc = PMC.PMC(3, 4)
 converged = False
-delta_precision = 0.05
-iters_delta = 5
-cpt_delta = 0
-last_score = 0
-score = 0
+max_iters = 5000
+iters = 0
 predictions = []
 
-while not converged :
+while not converged and iters < max_iters :
     predictions, converged = pmc.fit(X_train, y_train)
-    score = pmc.score(X_train, y_train)
-    if(abs(score - last_score) < delta_precision):
-        cpt_delta += 1
-    else:
-        cpt_delta = 0
-    last_score = score
-    if not converged :
-        converged = cpt_delta == iters_delta
+    iters += 1
+print("Converged in " + str(iters) + " iterations")
 
 print("============ Train Performance ============")
 print(precision_score(y_train, predictions, average='macro'))
